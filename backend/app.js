@@ -35,10 +35,10 @@ const run = async () => {
       throw new Error('Сервер сейчас упадёт');
     }, 0);
   });
-  app.post('/signup', validateCreateUser, createUser);
-  app.post('/signin', validateLogin, login);
-  app.use('/users', routerUser);
-  app.use('/movies', routerMovies);
+  app.post('/api/signup', validateCreateUser, createUser);
+  app.post('api/signin', validateLogin, login);
+  app.use('/api/users', routerUser);
+  app.use('/api/movies', routerMovies);
   app.all('*', auth, (req, res, next) => next(new NotFoundError('Запрашиваемая страница не найдена')));
   app.use(errorLogger);
   app.use(errors());
