@@ -12,8 +12,6 @@ import {
 const routerUser = Router();
 
 routerUser.get('/me', auth, getMe);
-// routerUser.get('/me', auth, getMe);
-// routerUser.get('/:userId', validateGetUserById, auth, getUserById);
 routerUser.post('/', validateCreateUser, auth, createUser);
 routerUser.patch('/me', validateEditUser, auth, updateProfile);
 

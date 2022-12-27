@@ -10,15 +10,6 @@ import NotFoundError from '../errors/NotFoundError.js';
 dotenv.config();
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-// export const getUsers = (req, res, next) => {
-//   User.find({})
-//     .then((users) => res.send({ data: users }))
-//     .catch((err) => {
-//       console.log(err);
-//       next(err);
-//     });
-// };
-
 export const createUser = (req, res, next) => {
   const {
     name,
@@ -63,22 +54,6 @@ export const getMe = (req, res, next) => {
       }
     });
 };
-
-// export const getUserById = (req, res, next) => {
-//   User.findById({ _id: req.params.userId })
-//     .then((user) => {
-//       if (user) return res.send(user);
-//       return next(new NotFoundError('Пользователь с указанным _id не найден.'));
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         next(new BadRequestError('Передан некорректный id'));
-//       } else {
-//         console.log(err);
-//         next(err);
-//       }
-//     });
-// };
 
 export const updateProfile = (req, res, next) => {
   const { email, name } = req.body;
