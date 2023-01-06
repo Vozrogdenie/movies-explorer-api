@@ -2,10 +2,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import UnauthorizedError from '../errors/UnauthorizedError.js';
 
-// const NODE_ENV = 'production';
-// const JWT_SECRET = '3140021d0be7e318fa645c1f42d1b94b03f6c21c9df1a77c0f33bee90c4a86f5';
 dotenv.config();
-const { NODE_ENV, JWT_SECRET } = process.env;
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt-secret';
 
 const handleAuthError = (next) => next(new UnauthorizedError('Необходима авторизация'));
 

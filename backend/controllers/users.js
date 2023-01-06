@@ -8,7 +8,8 @@ import ConflictError from '../errors/ConflictError.js';
 import NotFoundError from '../errors/NotFoundError.js';
 
 dotenv.config();
-const { NODE_ENV, JWT_SECRET } = process.env;
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt-secret';
 
 export const createUser = (req, res, next) => {
   const {

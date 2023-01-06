@@ -13,6 +13,7 @@ import requestLogger from './middlewares/logger.js';
 import errorLogger from './middlewares/error.js';
 import auth from './middlewares/auth.js';
 import limiter from './middlewares/rateLimit.js';
+import handlingError from './middlewares/handlingError.js';
 
 const run = async () => {
   process.on('unhandledRejection', (err) => {
@@ -35,8 +36,8 @@ const run = async () => {
       throw new Error('Сервер сейчас упадёт');
     }, 0);
   });
-  app.post('/api/signup', validateCreateUser, createUser);
-  app.post('api/signin', validateLogin, login);
+  app.post('/signup', validateCreateUser, createUser);
+  app.post('/signin', validateLogin, login);
   app.use('/api/users', routerUser);
   app.use('/api/movies', routerMovies);
   app.all('*', auth, (req, res, next) => next(new NotFoundError('Запрашиваемая страница не найдена')));
@@ -44,18 +45,9 @@ const run = async () => {
   app.use(errors());
   app.use(helmet());
   app.use(limiter);
-  app.use((err, req, res, next) => {
-    const { statusCode = 500, message } = err;
-    res
-      .status(statusCode)
-      .send({
-        message: statusCode === 500
-          ? 'На сервере произошла ошибка'
-          : message,
-      });
-    next(err);
-  });
-  const { DB_URL } = process.env;
+  app.use(handlingError);
+
+  const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017/bitfilmsdb';
   mongoose.set('strictQuery', true);
   mongoose.set('runValidators', true);
   await mongoose.connect(DB_URL);
