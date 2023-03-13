@@ -23,7 +23,7 @@ const run = async () => {
 
   const app = express();
   const config = {
-    PORT: 3000,
+    PORT: 3001,
     HOST: 'localhost',
   };
 
