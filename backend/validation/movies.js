@@ -1,7 +1,7 @@
 import { Joi, celebrate } from 'celebrate';
 import { regExpUrl } from '../utils/regex.js';
 
-export const validateCreateMovieId = celebrate({
+export const validateCreateMovie = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -20,6 +20,6 @@ export const validateCreateMovieId = celebrate({
 
 export const validateGetMovieId = celebrate({
   params: Joi.object({
-    movieId: Joi.string().hex().length(24).required(),
+    movieId: Joi.string().required(),
   }).required(),
 });

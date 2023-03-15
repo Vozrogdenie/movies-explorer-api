@@ -61,16 +61,16 @@ export function createMovies(req, res, next) {
 }
 
 export function deleteMovies(req, res, next) {
-  Movie.findById(req.params.movieId)
-    .then((movies) => {
-      if (!movies) {
-        return next(new NotFoundError('Фильм с указанным _id не найдена.'));
+  Movie.findOne({movieId: req.params.movieId})
+    .then((movie) => {
+      if (!movie) {
+        return next(new NotFoundError('Фильм с указанным _id не найден.'));
       }
-      if (movies.owner.toString() !== req.user._id) {
+      if (movie.owner.toString() !== req.user._id) {
         return next(new ForbiddenError('Forbiden'));
       }
-      return movies.remove()
-        .then((deletedMovies) => res.send({ data: deletedMovies }))
+      return movie.remove()
+        .then((deletedMovie) => res.send({ data: deletedMovie }))
         .catch((err) => {
           if (err.name === 'CastError') {
             next(new BadRequestError('Передан некорректный id'));
@@ -79,5 +79,7 @@ export function deleteMovies(req, res, next) {
             next(err);
           }
         });
+    }).catch(err => {
+      console.log(err);
     });
 }
