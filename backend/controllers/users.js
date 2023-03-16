@@ -58,7 +58,7 @@ export const getMe = (req, res, next) => {
 
 export const updateProfile = (req, res, next) => {
   const { email, name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { email, name }, { new: true })
+  User.findByIdAndUpdate(req.user._id, { email: email, name: name })
     .then((user) => {
       if (user) return res.send(user);
       return next(new NotFoundError('Пользователь с указанным _id не найден.'));

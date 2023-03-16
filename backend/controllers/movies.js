@@ -4,7 +4,7 @@ import NotFoundError from '../errors/NotFoundError.js';
 import Movie from '../model/movies.js';
 
 export function getMovies(req, res, next) {
-  Movie.find({}).populate(['owner']).sort({ createdAt: -1 })
+  Movie.find({owner: req.user._id}).populate(['owner']).sort({ createdAt: -1 })
     .then((movies) => res.send({ data: movies }))
     .catch((err) => {
       console.log(err.message);
