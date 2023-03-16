@@ -61,7 +61,7 @@ export function createMovies(req, res, next) {
 }
 
 export function deleteMovies(req, res, next) {
-  Movie.findOne({movieId: req.params.movieId})
+  Movie.findOne({movieId: req.params.movieId, owner: req.user._id})
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError('Фильм с указанным _id не найден.'));
