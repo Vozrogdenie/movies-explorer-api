@@ -21,12 +21,15 @@ export const createUser = (req, res, next) => {
     .then((hash) => {
       User.create({
         name, email, password: hash,
-      }).then((user) => res.status(constants.HTTP_STATUS_CREATED).send({
-        data: {
-          _id: user._id,
-          email: user.email,
-        },
-      }))
+      }).then((user) => {
+        const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+        res.status(constants.HTTP_STATUS_CREATED).json({
+          data: {
+            _id: user._id,
+            email: user.email,
+            token: token,
+          },
+      })})
         .catch((err) => {
           if (err.name === 'ValidationError') {
             next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
