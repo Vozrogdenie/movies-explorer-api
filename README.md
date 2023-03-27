@@ -1,6 +1,6 @@
 Проект - сайт с поиском фильмов.
 
 
-IP 62.84.125.70
+IP 158.160.52.116
 
 Backend https://api.renaissance.films.nomoredomains.club
